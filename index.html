@@ -808,40 +808,34 @@
   </main>
 
   <script>
-    const buttons = document.querySelectorAll(".tab-btn");
-    const heroBlocks = document.querySelectorAll("[data-market-content]");
-    const marketPages = document.querySelectorAll("[data-market-page]");
+    const buttons = document.querySelectorAll('.tab-btn');
+    const heroBlocks = document.querySelectorAll('[data-market-content]');
+    const marketPages = document.querySelectorAll('[data-market-page]');
 
     buttons.forEach((button) => {
       button.addEventListener('click', () => {
         const market = button.dataset.market;
 
-        // Toggle active tab
+        // Active tab state
         buttons.forEach((btn) => btn.classList.remove('active'));
         button.classList.add('active');
 
-        // Switch theme
-        if (market === 'mx') {
-          document.body.classList.add('mx');
-        } else {
-          document.body.classList.remove('mx');
-        }
+        // BR keeps green theme, MX switches to red theme
+        document.body.classList.toggle('mx', market === 'mx');
 
-        // Switch hero blocks
+        // Switch hero metric pills and snapshot panel
         heroBlocks.forEach((block) => {
           const isActive = block.dataset.marketContent === market;
-          block.style.display = isActive ? (block.classList.contains('hero-actions') ? 'flex' : 'block') : 'none';
+          if (isActive) {
+            block.style.display = block.classList.contains('hero-actions') ? 'flex' : 'block';
+          } else {
+            block.style.display = 'none';
+          }
         });
 
-        // Switch pages
+        // Switch market content
         marketPages.forEach((page) => {
           page.classList.toggle('active', page.dataset.marketPage === market);
-        });
-      });
-    });
-
-        marketPages.forEach((page) => {
-          page.classList.toggle("active", page.dataset.marketPage === market);
         });
       });
     });
