@@ -7,7 +7,6 @@
   <style>
     :root {
       --bg: #07110f;
-      --bg-soft: #0e1b18;
       --card: rgba(255, 255, 255, 0.08);
       --card-border: rgba(255, 255, 255, 0.14);
       --text: #f4fff9;
@@ -23,11 +22,7 @@
       --radius: 28px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -40,11 +35,7 @@
       min-height: 100vh;
     }
 
-    .page {
-      width: min(1180px, calc(100% - 40px));
-      margin: 0 auto;
-      padding: 56px 0 72px;
-    }
+    .page { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 56px 0 72px; }
 
     .hero {
       min-height: 520px;
@@ -77,18 +68,33 @@
       margin-bottom: 24px;
     }
 
-    .hero p {
-      max-width: 620px;
-      color: var(--muted);
-      font-size: 19px;
-      margin-bottom: 34px;
+    .hero p { max-width: 620px; color: var(--muted); font-size: 19px; margin-bottom: 26px; }
+
+    .tabs {
+      display: inline-flex;
+      padding: 6px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      margin-bottom: 24px;
+      gap: 6px;
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
+    .tab-btn {
+      border: 0;
+      color: var(--muted);
+      background: transparent;
+      padding: 12px 26px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: 0.25s ease;
     }
+
+    .tab-btn.active { background: var(--green); color: #03100c; }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
 
     .pill {
       border: 1px solid var(--card-border);
@@ -109,17 +115,9 @@
       backdrop-filter: blur(18px);
     }
 
-    .panel-title {
-      color: var(--muted);
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
+    .panel-title { color: var(--muted); font-weight: 700; margin-bottom: 18px; }
 
-    .hero-metrics {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
+    .hero-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
     .metric-card {
       border: 1px solid var(--card-border);
@@ -128,26 +126,11 @@
       padding: 22px;
     }
 
-    .metric-card .icon {
-      font-size: 28px;
-      margin-bottom: 12px;
-    }
+    .metric-card .icon { font-size: 28px; margin-bottom: 12px; }
+    .metric-card .value { font-size: 34px; font-weight: 900; letter-spacing: -0.04em; }
+    .metric-card .label { color: var(--muted); font-size: 14px; margin-top: 4px; }
 
-    .metric-card .value {
-      font-size: 34px;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-    }
-
-    .metric-card .label {
-      color: var(--muted);
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    .section {
-      margin-top: 42px;
-    }
+    .section { margin-top: 42px; }
 
     .section-header {
       display: flex;
@@ -157,22 +140,15 @@
       margin-bottom: 22px;
     }
 
-    .section-header h2 {
-      font-size: clamp(30px, 4vw, 46px);
-      line-height: 1;
-      letter-spacing: -0.045em;
-    }
+    .section-header h2 { font-size: clamp(30px, 4vw, 46px); line-height: 1; letter-spacing: -0.045em; }
+    .section-header p { color: var(--muted); max-width: 480px; }
 
-    .section-header p {
-      color: var(--muted);
-      max-width: 480px;
-    }
+    .market-page { display: none; }
+    .market-page.active { display: block; animation: fadeIn 0.35s ease; }
 
-    .month-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .month-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 
     .month-card {
       position: relative;
@@ -184,27 +160,10 @@
       box-shadow: 0 16px 50px rgba(0,0,0,0.22);
     }
 
-    .month-card::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 5px;
-      background: var(--accent);
-    }
+    .month-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: var(--accent); }
 
-    .month-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 22px;
-    }
-
-    .month-name {
-      font-size: 14px;
-      color: var(--muted);
-      font-weight: 900;
-      letter-spacing: 0.12em;
-    }
+    .month-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+    .month-name { font-size: 14px; color: var(--muted); font-weight: 900; letter-spacing: 0.12em; }
 
     .tag {
       font-size: 12px;
@@ -213,6 +172,7 @@
       border-radius: 999px;
       background: var(--tag-bg);
       color: var(--tag-color);
+      white-space: nowrap;
     }
 
     .stat-row {
@@ -224,28 +184,11 @@
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-    .stat-row:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
+    .stat-row:last-child { border-bottom: 0; padding-bottom: 0; }
+    .stat-label { color: var(--muted); font-weight: 700; }
+    .stat-value { font-size: 24px; font-weight: 900; letter-spacing: -0.035em; text-align: right; }
 
-    .stat-label {
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .stat-value {
-      font-size: 24px;
-      font-weight: 900;
-      letter-spacing: -0.035em;
-      text-align: right;
-    }
-
-    .insight-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
+    .insight-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 
     .insight-card, .focus-card {
       border: 1px solid var(--card-border);
@@ -255,24 +198,10 @@
       box-shadow: 0 16px 50px rgba(0,0,0,0.22);
     }
 
-    .insight-card h3,
-    .focus-card h3 {
-      font-size: 28px;
-      letter-spacing: -0.035em;
-      margin-bottom: 16px;
-    }
+    .insight-card h3, .focus-card h3 { font-size: 28px; letter-spacing: -0.035em; margin-bottom: 16px; }
+    .insight-card p, .focus-card p { color: var(--muted); margin-bottom: 16px; }
 
-    .insight-card p,
-    .focus-card p {
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
-
-    .trend-box {
-      display: grid;
-      gap: 14px;
-      margin-top: 18px;
-    }
+    .trend-box { display: grid; gap: 14px; margin-top: 18px; }
 
     .trend-item {
       border: 1px solid rgba(255,255,255,0.1);
@@ -281,26 +210,10 @@
       padding: 16px;
     }
 
-    .trend-line {
-      height: 10px;
-      border-radius: 999px;
-      margin-top: 12px;
-      background: rgba(255,255,255,0.1);
-      overflow: hidden;
-    }
+    .trend-line { height: 10px; border-radius: 999px; margin-top: 12px; background: rgba(255,255,255,0.1); overflow: hidden; }
+    .trend-fill { height: 100%; border-radius: 999px; background: var(--accent); width: var(--width); }
 
-    .trend-fill {
-      height: 100%;
-      border-radius: 999px;
-      background: var(--accent);
-      width: var(--width);
-    }
-
-    .focus-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
+    .focus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 
     .focus-card .emoji {
       width: 52px;
@@ -313,62 +226,23 @@
       margin-bottom: 18px;
     }
 
-    ul {
-      list-style: none;
-      display: grid;
-      gap: 10px;
-      color: var(--muted);
-    }
+    ul { list-style: none; display: grid; gap: 10px; color: var(--muted); }
+    li::before { content: "•"; color: var(--green); font-weight: 900; margin-right: 10px; }
 
-    li::before {
-      content: "•";
-      color: var(--green);
-      font-weight: 900;
-      margin-right: 10px;
-    }
-
-    .footer-note {
-      margin-top: 46px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-    }
+    .footer-note { margin-top: 46px; text-align: center; color: var(--muted); font-size: 14px; }
 
     @media (max-width: 900px) {
-      .hero,
-      .insight-wrap,
-      .month-grid,
-      .focus-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        min-height: auto;
-        padding-top: 20px;
-      }
-
-      .section-header {
-        display: block;
-      }
-
-      .section-header p {
-        margin-top: 12px;
-      }
+      .hero, .insight-wrap, .month-grid, .focus-grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 20px; }
+      .section-header { display: block; }
+      .section-header p { margin-top: 12px; }
     }
 
     @media (max-width: 560px) {
-      .page {
-        width: min(100% - 24px, 1180px);
-        padding: 30px 0 50px;
-      }
-
-      .hero-metrics {
-        grid-template-columns: 1fr;
-      }
-
-      .metric-card .value {
-        font-size: 30px;
-      }
+      .page { width: min(100% - 24px, 1180px); padding: 30px 0 50px; }
+      .hero-metrics { grid-template-columns: 1fr; }
+      .metric-card .value { font-size: 30px; }
+      .tab-btn { padding: 10px 20px; }
     }
   </style>
 </head>
@@ -376,141 +250,153 @@
   <main class="page">
     <section class="hero">
       <div>
-        <div class="eyebrow">Q1 2026 · BR Market</div>
+        <div class="eyebrow">Q1 2026 · BR + MX Markets</div>
         <h1>Performance Overview</h1>
         <p>
-          A clean monthly view of deposit volume, daily deposit value, and ARPU — showing the shift from high-value users to stronger user volume across Q1.
+          A clean market-by-market view of deposit volume, daily deposit value, and ARPU. Use the tabs below to switch between BR and MX performance.
         </p>
-        <div class="hero-actions">
+
+        <div class="tabs" aria-label="Market tabs">
+          <button class="tab-btn active" data-market="br">BR</button>
+          <button class="tab-btn" data-market="mx">MX</button>
+        </div>
+
+        <div class="hero-actions market-hero active" data-market-content="br">
           <div class="pill">Avg Daily Depositors: 44</div>
-          <div class="pill">Avg Daily Deposit: MYR 16.9K</div>
+          <div class="pill">Avg Daily Deposit: MYR 17.0K</div>
           <div class="pill">Avg ARPU: MYR 393</div>
         </div>
+
+        <div class="hero-actions market-hero" data-market-content="mx" style="display:none;">
+          <div class="pill">Avg Daily Depositors: 43</div>
+          <div class="pill">Avg Daily Deposit: MYR 13.7K</div>
+          <div class="pill">Avg ARPU: MYR 324</div>
+        </div>
       </div>
 
-      <div class="hero-panel">
-        <div class="panel-title">Q1 Snapshot</div>
+      <div class="hero-panel market-panel active" data-market-content="br">
+        <div class="panel-title">BR Q1 Snapshot</div>
         <div class="hero-metrics">
-          <div class="metric-card">
-            <div class="icon">👥</div>
-            <div class="value">44</div>
-            <div class="label">Avg Unique Deposit / Day</div>
-          </div>
-          <div class="metric-card">
-            <div class="icon">💰</div>
-            <div class="value">16.9K</div>
-            <div class="label">Avg Total Deposit / Day</div>
-          </div>
-          <div class="metric-card">
-            <div class="icon">💎</div>
-            <div class="value">393</div>
-            <div class="label">Avg ARPU</div>
-          </div>
-          <div class="metric-card">
-            <div class="icon">🚀</div>
-            <div class="value">Mar</div>
-            <div class="label">Highest User Volume</div>
-          </div>
+          <div class="metric-card"><div class="icon">👥</div><div class="value">44</div><div class="label">Avg Unique Deposit / Day</div></div>
+          <div class="metric-card"><div class="icon">💰</div><div class="value">17.0K</div><div class="label">Avg Total Deposit / Day</div></div>
+          <div class="metric-card"><div class="icon">💎</div><div class="value">393</div><div class="label">Avg ARPU</div></div>
+          <div class="metric-card"><div class="icon">🚀</div><div class="value">Mar</div><div class="label">Highest User Volume</div></div>
+        </div>
+      </div>
+
+      <div class="hero-panel market-panel" data-market-content="mx" style="display:none;">
+        <div class="panel-title">MX Q1 Snapshot</div>
+        <div class="hero-metrics">
+          <div class="metric-card"><div class="icon">👥</div><div class="value">43</div><div class="label">Avg Unique Deposit / Day</div></div>
+          <div class="metric-card"><div class="icon">💰</div><div class="value">13.7K</div><div class="label">Avg Total Deposit / Day</div></div>
+          <div class="metric-card"><div class="icon">💎</div><div class="value">324</div><div class="label">Avg ARPU</div></div>
+          <div class="metric-card"><div class="icon">🚀</div><div class="value">Mar</div><div class="label">Highest User Volume</div></div>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="section-header">
-        <h2>Monthly Breakdown</h2>
-        <p>Average daily performance by month, based on Unique Deposit and Total Deposit.</p>
-      </div>
-
-      <div class="month-grid">
-        <article class="month-card" style="--accent: var(--green); --tag-bg: var(--green-soft); --tag-color: #9ffff0;">
-          <div class="month-top">
-            <div class="month-name">JAN 2026</div>
-            <div class="tag">High Value</div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-label">Avg Unique Deposit</div>
-            <div class="stat-value">40</div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-label">Avg Total Deposit</div>
-            <div class="stat-value">MYR 18.2K</div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-label">ARPU</div>
-            <div class="stat-value">MYR 453</div>
-          </div>
-        </article>
-
-        <article class="month-card" style="--accent: var(--yellow); --tag-bg: var(--yellow-soft); --tag-color: #ffe4a6;">
-          <div class="month-top">
-            <div class="month-name">FEB 2026</div>
-            <div class="tag">Performance Dip</div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-label">Avg Unique Deposit</div>
-            <div class="stat-value">37</div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-label">Avg Total Deposit</div>
-            <div class="stat-value">MYR 15.2K</div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-label">ARPU</div>
-            <div class="stat-value">MYR 408</div>
-          </div>
-        </article>
-
-        <article class="month-card" style="--accent: var(--blue); --tag-bg: var(--blue-soft); --tag-color: #b9ccff;">
-          <div class="month-top">
-            <div class="month-name">MAR 2026</div>
-            <div class="tag">User Growth</div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-label">Avg Unique Deposit</div>
-            <div class="stat-value">54</div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-label">Avg Total Deposit</div>
-            <div class="stat-value">MYR 17.3K</div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-label">ARPU</div>
-            <div class="stat-value">MYR 319</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="insight-wrap">
-        <div class="insight-card">
-          <h3>Key Insight</h3>
-          <p>
-            March delivered the highest user volume, but ARPU dropped compared with January and February. This indicates growth is coming from a broader base of lower-value players.
-          </p>
-          <p><strong>Presentation story:</strong> Q1 shifted from value-driven performance in January to volume-driven growth in March.</p>
+    <div class="market-page active" data-market-page="br">
+      <section class="section">
+        <div class="section-header">
+          <h2>BR Monthly Breakdown</h2>
+          <p>Average daily performance by month, based on Unique Deposit and Total Deposit.</p>
         </div>
 
-        <div class="insight-card">
-          <h3>Trend Signal</h3>
-          <div class="trend-box">
-            <div class="trend-item" style="--accent: var(--blue); --width: 100%;">
-              <strong>Unique Depositors</strong>
-              <div class="trend-line"><div class="trend-fill"></div></div>
-            </div>
-            <div class="trend-item" style="--accent: var(--danger); --width: 70%;">
-              <strong>ARPU</strong>
-              <div class="trend-line"><div class="trend-fill"></div></div>
+        <div class="month-grid">
+          <article class="month-card" style="--accent: var(--green); --tag-bg: var(--green-soft); --tag-color: #9ffff0;">
+            <div class="month-top"><div class="month-name">JAN 2026</div><div class="tag">High Value</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Unique Deposit</div><div class="stat-value">40</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Total Deposit</div><div class="stat-value">MYR 18.2K</div></div>
+            <div class="stat-row"><div class="stat-label">ARPU</div><div class="stat-value">MYR 453</div></div>
+          </article>
+
+          <article class="month-card" style="--accent: var(--yellow); --tag-bg: var(--yellow-soft); --tag-color: #ffe4a6;">
+            <div class="month-top"><div class="month-name">FEB 2026</div><div class="tag">Performance Dip</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Unique Deposit</div><div class="stat-value">37</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Total Deposit</div><div class="stat-value">MYR 15.2K</div></div>
+            <div class="stat-row"><div class="stat-label">ARPU</div><div class="stat-value">MYR 408</div></div>
+          </article>
+
+          <article class="month-card" style="--accent: var(--blue); --tag-bg: var(--blue-soft); --tag-color: #b9ccff;">
+            <div class="month-top"><div class="month-name">MAR 2026</div><div class="tag">User Growth</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Unique Deposit</div><div class="stat-value">54</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Total Deposit</div><div class="stat-value">MYR 17.3K</div></div>
+            <div class="stat-row"><div class="stat-label">ARPU</div><div class="stat-value">MYR 319</div></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="insight-wrap">
+          <div class="insight-card">
+            <h3>BR Key Insight</h3>
+            <p>March delivered the highest user volume, but ARPU dropped compared with January and February. This indicates growth is coming from a broader base of lower-value players.</p>
+            <p><strong>Presentation story:</strong> BR shifted from value-driven performance in January to volume-driven growth in March.</p>
+          </div>
+          <div class="insight-card">
+            <h3>BR Trend Signal</h3>
+            <div class="trend-box">
+              <div class="trend-item" style="--accent: var(--blue); --width: 100%;"><strong>Unique Depositors</strong><div class="trend-line"><div class="trend-fill"></div></div></div>
+              <div class="trend-item" style="--accent: var(--danger); --width: 70%;"><strong>ARPU</strong><div class="trend-line"><div class="trend-fill"></div></div></div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
+
+    <div class="market-page" data-market-page="mx">
+      <section class="section">
+        <div class="section-header">
+          <h2>MX Monthly Breakdown</h2>
+          <p>Average daily performance by month, based on Unique Deposit and Total Deposit.</p>
+        </div>
+
+        <div class="month-grid">
+          <article class="month-card" style="--accent: var(--green); --tag-bg: var(--green-soft); --tag-color: #9ffff0;">
+            <div class="month-top"><div class="month-name">JAN 2026</div><div class="tag">Stable Base</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Unique Deposit</div><div class="stat-value">38</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Total Deposit</div><div class="stat-value">MYR 11.4K</div></div>
+            <div class="stat-row"><div class="stat-label">ARPU</div><div class="stat-value">MYR 303</div></div>
+          </article>
+
+          <article class="month-card" style="--accent: var(--yellow); --tag-bg: var(--yellow-soft); --tag-color: #ffe4a6;">
+            <div class="month-top"><div class="month-name">FEB 2026</div><div class="tag">Best ARPU</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Unique Deposit</div><div class="stat-value">36</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Total Deposit</div><div class="stat-value">MYR 13.5K</div></div>
+            <div class="stat-row"><div class="stat-label">ARPU</div><div class="stat-value">MYR 375</div></div>
+          </article>
+
+          <article class="month-card" style="--accent: var(--blue); --tag-bg: var(--blue-soft); --tag-color: #b9ccff;">
+            <div class="month-top"><div class="month-name">MAR 2026</div><div class="tag">Growth Peak</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Unique Deposit</div><div class="stat-value">55</div></div>
+            <div class="stat-row"><div class="stat-label">Avg Total Deposit</div><div class="stat-value">MYR 16.1K</div></div>
+            <div class="stat-row"><div class="stat-label">ARPU</div><div class="stat-value">MYR 293</div></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="insight-wrap">
+          <div class="insight-card">
+            <h3>MX Key Insight</h3>
+            <p>MX showed steady deposit value growth from January to March, with March achieving the highest depositor volume and total daily deposit.</p>
+            <p><strong>Presentation story:</strong> MX grew stronger in scale, but February had the highest player value efficiency.</p>
+          </div>
+          <div class="insight-card">
+            <h3>MX Trend Signal</h3>
+            <div class="trend-box">
+              <div class="trend-item" style="--accent: var(--blue); --width: 100%;"><strong>Unique Depositors</strong><div class="trend-line"><div class="trend-fill"></div></div></div>
+              <div class="trend-item" style="--accent: var(--green); --width: 88%;"><strong>Total Deposit</strong><div class="trend-line"><div class="trend-fill"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <section class="section">
       <div class="section-header">
         <h2>Strategic Focus</h2>
-        <p>Recommended actions to balance user growth with stronger player value.</p>
+        <p>Recommended actions to balance user growth with stronger player value across both markets.</p>
       </div>
 
       <div class="focus-grid">
@@ -546,9 +432,31 @@
       </div>
     </section>
 
-    <div class="footer-note">
-      Q1 2026 summary · Metrics shown as daily averages by month
-    </div>
+    <div class="footer-note">Q1 2026 summary · Metrics shown as daily averages by month</div>
   </main>
+
+  <script>
+    const buttons = document.querySelectorAll('.tab-btn');
+    const heroBlocks = document.querySelectorAll('[data-market-content]');
+    const marketPages = document.querySelectorAll('[data-market-page]');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const market = button.dataset.market;
+
+        buttons.forEach((btn) => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        heroBlocks.forEach((block) => {
+          const isActive = block.dataset.marketContent === market;
+          block.style.display = isActive ? (block.classList.contains('hero-actions') ? 'flex' : 'block') : 'none';
+        });
+
+        marketPages.forEach((page) => {
+          page.classList.toggle('active', page.dataset.marketPage === market);
+        });
+      });
+    });
+  </script>
 </body>
 </html>
